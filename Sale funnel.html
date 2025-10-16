@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mykel Ton — PLR AI Agent | Sales Page</title>
+  <meta name="description" content="Ebook + Checklist + Blueprint: Launch fast with a bright, modern PLR bundle. Now with Monthly/Annual/Lifetime pricing." />
+  <meta name="theme-color" content="#10b981" />
+  <link rel="canonical" href="https://mykelton.example/plr-ai-agent" />
+  <!-- OG / Twitter -->
+  <meta property="og:title" content="PLR AI Agent — Sales Page" />
+  <meta property="og:description" content="Ebook + Checklist + Blueprint: Launch fast with a bright, modern PLR bundle." />
+  <meta property="og:image" content="https://mykelton.example/og/plr-ai-agent.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root { 
+      /* Light palette */
+      --bg:#ffffff; --bg-soft:#f6f8fb; --bg-accent:#f0fdf4;
+      --text:#0f172a; --body:#334155; --muted:#64748b;
+      --border:#e5e7eb; --panel:#ffffff; --shadow:0 10px 26px rgba(15,23,42,.08);
+      --radius:16px;
+      --accent:#10b981; --accent-2:#2563eb; --warn:#f59e0b;
+      /* layout vars */
+      --nav-h:56px; /* header nav height */
+      --strip-h:40px; /* countdown strip approx height */
+      /* scroll-cooldown */
+      --prog: 0;           /* 0..1, set by JS theo scroll */
+      --cooldown-ms: 220ms;/* duration “đuổi theo” = theo tốc độ cuộn */
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--body);background:linear-gradient(180deg,#fff,var(--bg-soft))}
+    a{color:var(--accent-2);text-decoration:none}
+    a:focus-visible,.btn:focus-visible{outline:3px solid var(--accent-2);outline-offset:2px;border-radius:10px}
+    .container{width:min(1180px,92%);margin-inline:auto}
+
+    /* Utilities */
+    .center{text-align:center}
+    .mt-0{margin-top:0}
+    .mt-8{margin-top:8px}
+    .mt-12{margin-top:12px}
+    .mt-16{margin-top:16px}
+    .mt-20{margin-top:20px}
+    .mb-0{margin-bottom:0}
+    .lead{color:#475569;max-width:860px;margin:0 auto}
+    .row{display:flex;align-items:center;gap:10px}
+
+  /* Header */
+header{
+  position:fixed; /* 🔥 đổi từ sticky → fixed để chạy xuyên suốt */
+  top:0;
+  left:0;
+  right:0;
+  z-index:9999; /* 🔥 nâng ưu tiên cao hơn countdown + section */
+  background:rgba(255,255,255,.9);
+  backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid var(--border);
+}
+
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:10px;font-family:Poppins;font-weight:800;color:var(--text)}
+    .brand .dot{width:12px;height:12px;border-radius:50%;background:conic-gradient(from 0deg,#22c55e,#60a5fa,#22c55e)}
+    nav a{color:#475569;font-weight:700;margin-left:16px}
+    .nav a.active{color:var(--accent-2);text-decoration:underline;text-underline-offset:6px}
+
+    /* Countdown strip */
+    .countdown-strip{position:sticky;top:var(--nav-h);z-index:25;background:var(--bg-accent);border-top:1px solid #dcfce7;border-bottom:1px solid #dcfce7;box-shadow:0 2px 8px rgba(16,185,129,.08);padding:8px 0}
+    .countdown-row{display:flex;align-items:center;justify-content:center;gap:10px}
+    .countdown-strip.fixed{position:fixed;top:var(--nav-h);left:0;right:0}
+    #cd-spacer{height:var(--strip-h)}
+    [hidden]{display:none !important} 
+
+    /* Sections */
+    section{padding:60px 0}
+    h1,h2{font-family:Poppins,Inter,sans-serif;color:var(--text);font-weight:800;line-height:1.08;margin:0 0 10px}
+    h1{font-size:clamp(34px,5vw,60px)}
+    h2{font-size:clamp(26px,3.2vw,38px)}
+
+    /* Hero */
+    .hero{padding:100px 0 72px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;background:#ecfdf5;color:#065f46;font-weight:800;font-size:.9rem;border:1px solid #bbf7d0;margin-bottom:20px}
+    .sub{max-width:880px;margin:0 auto;color:#475569;font-size:clamp(16px,2vw,20px)}
+    .hero-cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;padding:14px 22px;border-radius:999px;font-weight:800;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+    .btn-primary{background:linear-gradient(180deg,#10b981,#059669);color:#032617;border:1px solid #86efac;box-shadow:var(--shadow)}
+    .btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .btn-ghost{background:#fff;color:#0f172a;border:1px solid var(--border)}
+    .btn-neutral{background:#fef3c7;color:#78350f;border:1px solid #fde68a}
+
+    /* Cards & grids */
+    .grid{display:grid;gap:18px}
+    .grid-auto-250{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+    .grid-auto-240{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .offer-grid{grid-template-columns:1.1fr .9fr}
+    @media(max-width:980px){.offer-grid{grid-template-columns:1fr}}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 6px;color:#0f172a;font-size:18px}
+
+    /* Pricing */
+    .toggle{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;flex-wrap:wrap}
+    .seg{display:inline-flex;background:#f1f5f9;padding:6px;border:1px solid var(--border);border-radius:999px}
+    .seg button{appearance:none;border:0;padding:10px 16px;border-radius:999px;color:#0f172a;background:transparent;font-weight:800;cursor:pointer}
+    .seg button.active{background:#fff;border:1px solid var(--border);box-shadow:0 2px 6px rgba(2,6,23,.06)}
+    .save{display:inline-block;background:#f0fdf4;color:#065f46;border:1px solid #bbf7d0;padding:6px 10px;border-radius:8px;font-weight:800}
+
+    .pricing{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:22px}
+    .pcard{display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(180deg,#ffffff,#fbfdff);border:1px solid var(--border);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);min-height:540px}
+    .pcard.best{box-shadow:0 0 0 3px #dcfce7,var(--shadow);border-color:#86efac}
+    .head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .badge{padding:6px 10px;border-radius:999px;border:1px solid #bfdbfe;background:#eff6ff;color:#1d4ed8;font-weight:800;font-size:.8rem}
+    .badge.best{background:#dcfce7;color:#065f46;border-color:#86efac}
+    .price{display:flex;align-items:flex-end;gap:8px;margin:12px 0}
+    .price .big{font-size:42px;font-weight:900;letter-spacing:.2px;color:#065f46}
+    .price .per{color:#64748b}
+    ul.features{list-style:none;padding:0;margin:14px 0 0}
+    ul.features li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;color:#334155}
+    .check{width:18px;height:18px;border-radius:4px;display:inline-grid;place-items:center;background:#ecfdf5;border:1px solid #bbf7d0;color:#059669;font-weight:900}
+    .pcard ul.features{flex-grow:1;margin-bottom:0}
+    .pcard .hero-cta{margin-top:auto;justify-content:center}
+    @media (max-width:640px){.pcard{min-height:auto}}
+
+    /* FAQ */
+    .faq-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-top:12px;align-items:start}
+    details{background:#fff;border:1px solid var(--border);border-radius:12px;padding:0;box-shadow:0 2px 8px rgba(2,6,23,.04);overflow:hidden}
+    summary{display:flex;align-items:center;gap:8px;padding:12px 14px;cursor:pointer;font-weight:800;color:#0f172a;list-style:none}
+    details[open]>summary{border-bottom:1px solid var(--border);background:#f8fafc}
+    details>p{padding:12px 14px;margin:0;color:#475569}
+
+    footer{padding:36px 0 70px;color:#64748b;font-size:14px;border-top:1px solid var(--border);text-align:center}
+    section[id]{scroll-margin-top:calc(var(--nav-h) + var(--strip-h) + 24px)}
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      html{scroll-behavior:auto}
+      .btn{transition:none}
+    }
+
+    /* ===== Header SCROLL-COOLDOWN (tiến độ theo cuộn, tốc độ bám theo velocity) ===== */
+    /* Ẩn nav-progress cũ vì ta chuyển qua scroll-driven */
+    .nav-progress{ display:none }
+
+    /* Track mờ ở mép dưới header */
+    header::after{
+      content:"";
+      position:absolute; left:0; right:0; bottom:0;
+      height:3px; background:rgba(37,99,235,.15);
+    }
+    /* Thanh tiến độ: scaleX theo --prog, mượt theo --cooldown-ms */
+    header::before{
+      content:"";
+      position:absolute; left:0; bottom:0; height:3px; width:100%;
+      background:linear-gradient(90deg,var(--accent-2),#60a5fa);
+      transform-origin:left center;
+      transform:scaleX(var(--prog));
+      transition: transform var(--cooldown-ms) linear; /* thời gian bám theo tốc độ cuộn */
+      box-shadow:0 1px 0 rgba(0,0,0,.08);
+    }
+    @media (prefers-reduced-motion: reduce){
+      header::before{ transition:none }
+    }
+  </style>
+</head>
+<body>
+  <a href="#top" class="sr-only" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">Skip to content</a>
+  <header>
+    <div class="container nav" role="navigation" aria-label="Primary">
+      <a class="brand" href="#top" aria-label="Mykel Ton home"><span class="dot" aria-hidden="true"></span> MYKEL TON</a>
+      <nav>
+        <a href="#offer">Product</a>
+        <a href="#inside">Inside</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#affiliate">Affiliate</a>
+        <a href="#faq">FAQ</a>
+        <a href="#license">License</a>
+      </nav>
+    </div>
+    <div class="nav-progress" aria-hidden="true"></div>
+  </header>
+
+  <!-- Countdown Strip (separate, sticky below header) -->
+  <div class="countdown-strip" role="note" aria-label="Offer countdown">
+    <div class="container countdown-row">
+      <strong style="color:#0f172a">Launch special ends in</strong>
+      <span id="cd-timer" aria-live="polite" style="font-variant-numeric:tabular-nums;font-weight:800;color:#065f46"></span>
+      <a href="#pricing" class="btn btn-ghost" style="padding:6px 12px">Grab the deal</a>
+    </div>
+  </div>
+  <div id="cd-spacer" hidden></div>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <span class="eyebrow">PLR Rights • Brandable • Resell</span>
+        <h1>Launch your digital product and grow revenue — in days, not months.</h1>
+        <p class="sub">A bright, modern PLR bundle for creators & solo businesses: <b>Ebook</b> + <b>Checklist</b> + <b>Blueprint</b>. Edit it, brand it, resell it — and focus on selling.</p>
+        <div class="hero-cta">
+          <a href="#pricing" class="btn btn-primary">Get Instant Access</a>
+          <a href="#inside" class="btn btn-ghost">Preview Inside</a>
+          <a href="#license" class="btn btn-neutral">PLR License</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Offer -->
+    <section id="offer" aria-labelledby="offer-title">
+      <div class="container grid offer-grid" style="align-items:start">
+        <div class="card">
+          <h2 id="offer-title">What you’ll get</h2>
+          <p class="lead">Built for business outcomes: fast launch, clear structure, and conversion-ready CTAs — simply plug your brand in.</p>
+          <div class="grid grid-auto-250 mt-8">
+            <div class="card"><h3>1) Ebook (Core Asset)</h3><p>12 chapters covering mindset, systems, funnels and CTA placements.</p></div>
+            <div class="card"><h3>2) Checklist (Action)</h3><p>From research → setup → testing → launch. No missed steps.</p></div>
+            <div class="card"><h3>3) Blueprint (Flow)</h3><p>Lead Magnet → Nurture → Offer → Upsell. Includes email & hook templates.</p></div>
+            <div class="card"><h3>Bonus</h3><p>Sales page template, 20 headline formulas, 30 CTA ideas, 10 mockup scenes.</p></div>
+          </div>
+          <div class="hero-cta" style="justify-content:flex-start" aria-label="Offer actions">
+            <a href="#inside" class="btn btn-ghost">See Demo</a>
+            <a href="#pricing" class="btn btn-primary">Buy Now</a>
+          </div>
+        </div>
+        <aside class="card" aria-labelledby="who-title">
+          <h3 id="who-title" class="mt-0">Who it’s for</h3>
+          <ul style="text-align:left;color:#334155;line-height:1.7;padding-left:18px;margin:0">
+            <li>Creators launching (or expanding) digital products.</li>
+            <li>Busy founders who need a clean, ready-to-use framework.</li>
+            <li>Anyone who wants PLR rights to edit, brand, resell, or serve clients.</li>
+          </ul>
+          <div style="height:1px;background:#eef2f7;margin:16px 0" aria-hidden="true"></div>
+          <h3>License notice</h3>
+          <p style="color:#475569;margin:0">PLR lets you edit and resell. You cannot claim authorship of the original Mykel Ton edition.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Inside -->
+    <section id="inside">
+      <div class="container">
+        <h2>Inside the bundle</h2>
+        <p class="lead">Replace these placeholders with your real previews when ready:</p>
+        <div class="faq-grid">
+          <div class="card" style="height:160px;display:grid;place-items:center;color:#94a3b8">Table of contents (12 chapters)</div>
+          <div class="card" style="height:160px;display:grid;place-items:center;color:#94a3b8">Sample page + CTA</div>
+          <div class="card" style="height:160px;display:grid;place-items:center;color:#94a3b8">Checklist preview</div>
+          <div class="card" style="height:160px;display:grid;place-items:center;color:#94a3b8">Funnel blueprint</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" aria-labelledby="pricing-title">
+      <div class="container center">
+        <h2 id="pricing-title">Choose your plan</h2>
+        <p class="lead">Monthly • Annual • Lifetime. Switch anytime.</p>
+
+        <div class="toggle" role="tablist" aria-label="Billing Period">
+          <div class="seg" aria-live="polite">
+            <button id="bill-monthly" class="active" role="tab" aria-selected="true" aria-controls="pricing-grid">Monthly</button>
+            <button id="bill-annual" role="tab" aria-selected="false" aria-controls="pricing-grid">Annual</button>
+            <button id="bill-lifetime" role="tab" aria-selected="false" aria-controls="pricing-grid">Lifetime</button>
+          </div>
+          <span class="save" id="save-pill">Cancel anytime</span>
+        </div>
+
+        <div id="pricing-grid" class="pricing mt-12">
+          <!-- Starter -->
+          <article class="pcard" data-sku="starter">
+            <div class="head"><h3>Starter</h3><span class="badge">Solo</span></div>
+            <div class="price"><span class="big" data-monthly="19" data-annual="15" data-lifetime="99">19</span><span class="per">/mo</span></div>
+            <ul class="features">
+              <li><span class="check">✓</span> Ebook (PDF + DOCX)</li>
+              <li><span class="check">✓</span> Action checklist</li>
+              <li><span class="check">✓</span> Basic PLR license</li>
+            </ul>
+            <div class="hero-cta">
+              <a class="btn btn-primary" data-checkout href="https://checkout.example/m-starter">Start Starter</a>
+              <a class="btn btn-ghost" href="#faq">FAQ</a>
+            </div>
+          </article>
+
+          <!-- Full (Best) -->
+          <article class="pcard best" data-sku="full">
+            <div class="head"><h3>Full PLR Bundle</h3><span class="badge best">Best value</span></div>
+            <div class="price"><span class="big" data-monthly="39" data-annual="29" data-lifetime="149">39</span><span class="per">/mo</span></div>
+            <ul class="features">
+              <li><span class="check">✓</span> Ebook + Checklist + Blueprint</li>
+              <li><span class="check">✓</span> Sales page template</li>
+              <li><span class="check">✓</span> 20 headlines • 30 CTAs • 10 mockups</li>
+              <li><span class="check">✓</span> Extended PLR license</li>
+            </ul>
+            <div class="hero-cta">
+              <a class="btn btn-primary" data-checkout href="https://checkout.example/m-full">Get Full Bundle</a>
+              <a class="btn btn-ghost" href="#faq">FAQ</a>
+            </div>
+          </article>
+
+          <!-- Pro -->
+          <article class="pcard" data-sku="pro">
+            <div class="head"><h3>Pro Upgrade</h3><span class="badge">Creator</span></div>
+            <div class="price"><span class="big" data-monthly="79" data-annual="59" data-lifetime="299">79</span><span class="per">/mo</span></div>
+            <ul class="features">
+              <li><span class="check">✓</span> Everything in Full Bundle</li>
+              <li><span class="check">✓</span> Ad templates (FB/YT/Shorts)</li>
+              <li><span class="check">✓</span> Optional group Q&A (60 min)</li>
+            </ul>
+            <div class="hero-cta">
+              <a class="btn btn-primary" data-checkout href="https://checkout.example/m-pro">Upgrade to Pro</a>
+              <a class="btn btn-ghost" href="#faq">FAQ</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Affiliate -->
+    <section id="affiliate">
+      <div class="container">
+        <h2>Affiliate Program — Earn 50% Commission</h2>
+        <p class="lead">Share PLR AI Agent with your audience and get paid on every sale. Free to join, tracked links, and promo materials included.</p>
+        <div class="grid grid-auto-250 mt-12">
+          <div class="card"><h3>Commission</h3><p><b>50% per sale</b> on all plans (Starter / Full / Pro).</p></div>
+          <div class="card"><h3>Cookie</h3><p><b>30 days</b> tracking window.</p></div>
+          <div class="card"><h3>Payouts</h3><p><b>Weekly</b> via Stripe or PayPal (minimum payout threshold <b>$20</b>). Affiliates are paid only when commissions reach $20 or more — no fixed weekly payment.</p></div>
+          <div class="card"><h3>Promo Kit</h3><p>Banners, mockups, headlines, and email swipes ready to use.</p></div>
+        </div>
+        <div class="hero-cta mt-16">
+          <a href="https://affiliates.example/register" class="btn btn-primary" target="_blank" rel="noopener">Become an Affiliate</a>
+          <a href="https://affiliates.example/dashboard" class="btn btn-ghost" target="_blank" rel="noopener">Affiliate Dashboard</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="container">
+        <h2>FAQ</h2>
+        <div class="grid grid-auto-240 mt-12">
+          <details><summary>What is PLR?</summary><p>Private Label Rights let you edit, brand, and resell the assets. You can’t claim original authorship of the Mykel Ton edition.</p></details>
+          <details><summary>What formats do I get?</summary><p>Ebook: PDF + DOCX • Checklist: PDF • Blueprint: PDF/PNG • Sales page: HTML.</p></details>
+          <details><summary>Can I rebrand it later?</summary><p>Yes — the bundle is designed for quick re-branding and relaunches for new niches.</p></details>
+          <details><summary>Refunds?</summary><p>Due to instant delivery of digital goods, refunds aren’t offered once downloaded. Faulty files will be replaced.</p></details>
+          <details><summary>Do you have an affiliate program?</summary><p>Yes. Affiliates earn <b>50%</b> commission with a <b>30-day</b> cookie and weekly payouts once commissions reach the <b>$20</b> minimum threshold (no fixed weekly payment).</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- License -->
+    <section id="license">
+      <div class="container">
+        <h2>PLR License</h2>
+        <p class="lead">You’re licensed to edit, rebrand, package, and resell the bundle as your own product. Do not claim original authorship of the Mykel Ton edition.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Mykel Ton. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // ===== Scroll-driven cooldown under header =====
+    // Tiến độ = vị trí cuộn (0..1). Tốc độ "đuổi theo" = theo velocity của cuộn.
+    (function(){
+      const docEl = document.documentElement;
+      const root  = document.documentElement; // để set CSS vars
+      let lastY = window.scrollY;
+      let lastT = performance.now();
+
+      function setProgress(p){
+        // Clamp 0..1 rồi set var
+        if(p < 0) p = 0; else if(p > 1) p = 1;
+        root.style.setProperty('--prog', p.toString());
+        // Cập nhật aria cho a11y (screen reader)
+        const header = document.querySelector('header');
+        if(header){
+          header.setAttribute('aria-label', `Scroll progress ${Math.round(p*100)} percent`);
+        }
+      }
+
+      function onScroll(){
+        const nowT = performance.now();
+        const dy   = Math.abs(window.scrollY - lastY);
+        const dt   = Math.max(1, nowT - lastT); // ms
+        // px/ms → velocity; map ngược thành duration (cuộn càng nhanh => duration càng ngắn)
+        const velocity = dy / dt; // px per ms
+        // tune: base=260ms, scale theo 1/velocity, clamp [90ms..600ms]
+        const base = 260;
+        const inv  = velocity > 0 ? (base / (velocity*8)) : base; // *8 để nhạy hơn
+        const dur  = Math.max(90, Math.min(600, inv));
+        root.style.setProperty('--cooldown-ms', `${Math.round(dur)}ms`);
+
+        const max = docEl.scrollHeight - window.innerHeight;
+        const p   = max > 0 ? (window.scrollY / max) : 0;
+        setProgress(p);
+
+        lastY = window.scrollY;
+        lastT = nowT;
+      }
+
+      // init + listeners
+      onScroll();
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', onScroll);
+      window.addEventListener('load', onScroll);
+    })();
+
+    // ===== Countdown: 72h from first visit (giữ nguyên) =====
+    document.addEventListener('DOMContentLoaded', function(){
+      const KEY='plr_cd_deadline';
+      let deadline=localStorage.getItem(KEY);
+      if(!deadline){ const d=new Date(Date.now()+72*60*60*1000); deadline=d.toISOString(); localStorage.setItem(KEY,deadline); }
+      const end=new Date(deadline).getTime(); const el=document.getElementById('cd-timer');
+      const pad=n=>String(n).padStart(2,'0');
+      function tick(){ const now=Date.now(); let t=Math.max(0,Math.floor((end-now)/1000)); const d=Math.floor(t/86400); t%=86400; const h=Math.floor(t/3600); t%=3600; const m=Math.floor(t/60); const s=t%60; if(el){ el.textContent=(d>0? d+'d ': '')+pad(h)+':'+pad(m)+':'+pad(s); el.setAttribute('data-remaining-seconds',Math.max(0,Math.floor((end-now)/1000))); } }
+      tick(); const iv=setInterval(()=>{ tick(); if(Date.now()>=end){ clearInterval(iv); if(el) el.textContent='00:00:00'; }},1000);
+    });
+
+    // ===== Pricing toggle (giữ nguyên) =====
+    document.addEventListener('DOMContentLoaded', function(){
+      const btnM=document.getElementById('bill-monthly');
+      const btnY=document.getElementById('bill-annual');
+      const btnL=document.getElementById('bill-lifetime');
+      const pill=document.getElementById('save-pill');
+      const cards=[...document.querySelectorAll('[data-sku]')];
+      const links={
+        monthly:{starter:'https://checkout.example/m-starter',full:'https://checkout.example/m-full',pro:'https://checkout.example/m-pro'},
+        annual:{starter:'https://checkout.example/y-starter',full:'https://checkout.example/y-full',pro:'https://checkout.example/y-pro'},
+        lifetime:{starter:'https://checkout.example/l-starter',full:'https://checkout.example/l-full',pro:'https://checkout.example/l-pro'}
+      };
+      function currency(v){return '$'+Number(v).toLocaleString('en-US')}
+      function setBilling(mode){
+        cards.forEach(card=>{
+          const big=card.querySelector('.big');
+          const per=card.querySelector('.per');
+          const sku=card.getAttribute('data-sku');
+          const a=card.querySelector('[data-checkout]');
+          if(!big||!per||!a) return;
+          const val=big.getAttribute('data-'+mode);
+          big.textContent = currency(val);
+          per.textContent = mode==='lifetime' ? 'One-time' : '/mo'+(mode==='annual'?' (annual)':'');
+          a.href = links[mode][sku];
+        });
+        btnM.classList.toggle('active',mode==='monthly'); btnY.classList.toggle('active',mode==='annual'); btnL.classList.toggle('active',mode==='lifetime');
+        btnM.setAttribute('aria-selected',mode==='monthly'); btnY.setAttribute('aria-selected',mode==='annual'); btnL.setAttribute('aria-selected',mode==='lifetime');
+        if(mode==='monthly') { pill.textContent='Cancel anytime'; return; }
+        if(mode==='lifetime') { pill.textContent='One-time payment'; return; }
+        const sample=document.querySelector('[data-sku="full"] .big');
+        if(sample){
+          const monthly=Number(sample.getAttribute('data-monthly'))*12;
+          const annualPerMo=Number(sample.getAttribute('data-annual'))*12;
+          const save=Math.max(0, monthly - annualPerMo);
+          pill.textContent = save>0 ? `Save ${currency(save)}/year` : 'Annual billing';
+        } else { pill.textContent='Annual billing'; }
+      }
+      btnM.addEventListener('click',()=>setBilling('monthly'));
+      btnY.addEventListener('click',()=>setBilling('annual'));
+      btnL.addEventListener('click',()=>setBilling('lifetime'));
+      setBilling('monthly');
+    });
+
+    // ===== Nav highlight on scroll (giữ nguyên) =====
+    document.addEventListener('DOMContentLoaded', function(){
+      const links=[...document.querySelectorAll('header nav a[href^="#"]')];
+      const sections=links.map(a=>{const id=a.getAttribute('href');return id?document.querySelector(id):null});
+      function activate(id){ links.forEach(a=>{ a.classList.toggle('active', a.getAttribute('href')==='#'+id); a.setAttribute('aria-current', a.classList.contains('active')?'page':'false'); }); }
+      const io=new IntersectionObserver(entries=>{ entries.forEach(en=>{ if(en.isIntersecting){ const id=en.target.getAttribute('id'); if(id) activate(id); } }); },{rootMargin:'-35% 0px -55% 0px',threshold:.01});
+      sections.forEach(s=>{ if(s) io.observe(s); });
+    });
+
+    // ===== Countdown-strip pin near bottom (giữ nguyên) =====
+    document.addEventListener('DOMContentLoaded', function(){
+      const strip = document.querySelector('.countdown-strip');
+      const spacer = document.getElementById('cd-spacer');
+      if(!strip||!spacer) return;
+      const THRESH = 80; // px from bottom
+      const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 56;
+      const originTop = strip.getBoundingClientRect().top + window.scrollY;
+      function syncSpacer(){ spacer.style.height = strip.offsetHeight + 'px'; }
+      const ro = new ResizeObserver(syncSpacer); ro.observe(strip); syncSpacer();
+      function onScroll(){
+        const doc = document.documentElement;
+        const bottomGap = doc.scrollHeight - (window.scrollY + window.innerHeight);
+        const nearBottom = bottomGap <= THRESH;
+        const pastOrigin = window.scrollY >= Math.max(0, originTop - navH);
+        const shouldFix = pastOrigin || nearBottom;
+        strip.classList.toggle('fixed', shouldFix);
+        spacer.hidden = !shouldFix;
+      }
+      onScroll();
+      window.addEventListener('scroll', onScroll, {passive:true});
+      window.addEventListener('resize', onScroll);
+    });
+  </script>
+
+  <!-- JSON-LD: Product + FAQ (annual prices aligned with UI) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Product",
+    "name":"PLR AI Agent Bundle",
+    "brand":{"@type":"Brand","name":"Mykel Ton"},
+    "description":"Ebook + Checklist + Blueprint with full PLR rights.",
+    "image":"https://mykelton.example/og/plr-ai-agent.jpg",
+    "offers":[
+      {"@type":"Offer","name":"Starter (Monthly)","price":"19","priceCurrency":"USD","url":"https://checkout.example/m-starter","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Full (Monthly)","price":"39","priceCurrency":"USD","url":"https://checkout.example/m-full","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Pro (Monthly)","price":"79","priceCurrency":"USD","url":"https://checkout.example/m-pro","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Starter (Annual)","price":"180","priceCurrency":"USD","url":"https://checkout.example/y-starter","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Full (Annual)","price":"348","priceCurrency":"USD","url":"https://checkout.example/y-full","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Pro (Annual)","price":"708","priceCurrency":"USD","url":"https://checkout.example/y-pro","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Starter (Lifetime)","price":"99","priceCurrency":"USD","url":"https://checkout.example/l-starter","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Full (Lifetime)","price":"149","priceCurrency":"USD","url":"https://checkout.example/l-full","availability":"https://schema.org/InStock"},
+      {"@type":"Offer","name":"Pro (Lifetime)","price":"299","priceCurrency":"USD","url":"https://checkout.example/l-pro","availability":"https://schema.org/InStock"}
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"What is PLR?","acceptedAnswer":{"@type":"Answer","text":"Private Label Rights let you edit, brand, and resell the assets. You can’t claim original authorship of the Mykel Ton edition."}},
+      {"@type":"Question","name":"What formats do I get?","acceptedAnswer":{"@type":"Answer","text":"Ebook: PDF + DOCX • Checklist: PDF • Blueprint: PDF/PNG • Sales page: HTML."}},
+      {"@type":"Question","name":"Can I rebrand it later?","acceptedAnswer":{"@type":"Answer","text":"Yes — the bundle is designed for quick re-branding and relaunches for new niches."}},
+      {"@type":"Question","name":"Refunds?","acceptedAnswer":{"@type":"Answer","text":"Due to instant delivery of digital goods, refunds aren’t offered once downloaded. Faulty files will be replaced."}},
+      {"@type":"Question","name":"Do you have an affiliate program?","acceptedAnswer":{"@type":"Answer","text":"Yes. Affiliates earn 50% commission with a 30-day cookie and weekly payouts once commissions reach the $20 minimum threshold (no fixed weekly payment)."}}
+    ]
+  }
+  </script>
+</body>
+</html>
